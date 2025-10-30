@@ -259,7 +259,3 @@ def clamp_slider_value():
 clamp_slider_value()
 
 st.slider("A", min_val, max_val, key="z") 
-
-
-
-#NEXT -> https://docs.streamlit.io/develop/concepts/multipage-apps 

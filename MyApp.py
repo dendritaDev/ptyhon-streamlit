@@ -22,19 +22,23 @@ def logout():
     if st.button("Log out"):
         st.session_state.logged_in = False
         st.rerun()
-    
+
 login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 
+#Get started
 fundamentals_page = st.Page("Get started/Fundamentals.py", title="Fundamentals", default=True)
+
+#Develop
 architecture_page = st.Page("Develop/Architecture_and_Execution.py", title="Architecture", icon=":material/dashboard:")
+appdesign_page = st.Page("Develop/AppDesign.py", title="AppDesign", icon=":material/brush:")
 
 if st.session_state.logged_in:
     pg = st.navigation(
         {
             "Account": [logout_page],
             "Get started": [fundamentals_page],
-            "Develop": [architecture_page],
+            "Develop": [architecture_page, appdesign_page],
         },
         position="sidebar",
         expanded=True
