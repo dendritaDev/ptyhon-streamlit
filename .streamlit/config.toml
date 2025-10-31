@@ -1,0 +1,77 @@
+# [theme]
+# base = "dark"               
+# primaryColor = "#7bff4bff"
+# backgroundColor = "#0E1117"
+# secondaryBackgroundColor = "#1B2431"
+# textColor = "#FAFAFA"
+# font = "sans serif" 
+# linkColor="darkOrchid"
+# showWidgetBorder=false
+
+
+
+# [theme.sidebar]
+# base = "dark"               
+# primaryColor = "#7bff4bff"
+# backgroundColor = "#0E1117"
+# secondaryBackgroundColor = "#1B2431"
+# textColor = "#FAFAFA"
+# font = "sans serif" 
+# linkColor="darkOrchid"
+# showWidgetBorder=true
+
+
+# =========================
+# CONFIGURACIÓN DE SERVIDOR
+# =========================
+[server]
+# Sirve archivos estáticos desde ./static en la URL relativa app/static/<archivo>
+enableStaticServing = true  # Requiere reinicio del servidor. :contentReference[oaicite:1]{index=1}
+
+# =========================
+# CONFIGURACIÓN DE TEMA BASE
+# =========================
+[theme]
+# 1) Esquema base
+base = "dark"  # "light" | "dark"
+
+# 2) Colores principales del cuerpo
+primaryColor = "#4BA3FF"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#1B2431"
+codeBackgroundColor = "#101826"        # Fondo de bloques de código
+textColor = "#FAFAFA"
+linkColor = "#B7E0FF"
+linkUnderline = true                    # Subrayado de links
+
+# 3) Bordes y radios
+baseRadius = "0.75rem"                  # Afecta contenedores, widgets, tablas, etc. :contentReference[oaicite:2]{index=2}
+buttonRadius = "full"                   # Sobrescribe el radio de botones (full=1rem) :contentReference[oaicite:3]{index=3}
+borderColor = "#334155"                 # Color general de bordes (widgets, contenedores, tabs...) :contentReference[oaicite:4]{index=4}
+dataframeBorderColor = "#475569"        # Borde de dataframes/tablas (prioriza sobre borderColor) :contentReference[oaicite:5]{index=5}
+showWidgetBorder = false                # Mostrar borde de widgets en reposo (no solo en focus) :contentReference[oaicite:6]{index=6}
+showSidebarBorder = true                # Línea vertical entre sidebar y app principal :contentReference[oaicite:7]{index=7}
+
+# 4) Paletas para gráficos (Altair/Vega-Lite/Plotly)
+#    Usadas como serie categórica/secuencial por defecto. :contentReference[oaicite:8]{index=8}
+chartCategoricalColors = ["#4BA3FF", "#F59E0B", "#10B981", "#EF4444", "#A78BFA", "#F97316", "#22D3EE"]
+chartSequentialColors  = ["#0EA5E9", "#38BDF8", "#7DD3FC", "#BAE6FD", "#E0F2FE"]
+
+# 5) Paleta básica (rojo, naranja, amarillo, verde, azul, violeta, gris)
+#    Se usa en badges, markdown coloreado, sparklines, alerts (success/warning), etc. :contentReference[oaicite:9]{index=9}
+redColor = "#EF4444"
+orangeColor = "#F59E0B"
+yellowColor = "#FACC15"
+greenColor = "#10B981"
+blueColor = "#4BA3FF"
+violetColor = "#A78BFA"
+grayColor = "#94A3B8"
+
+# 6) Tipografías (opción A: Google Fonts de forma rápida)
+#    NOTA: puedes usar 'Nombre:https://...css'. Puedes añadir fallback tras coma. :contentReference[oaicite:10]{index=10}
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap, sans-serif"
+headingFont= "'Space Grotesk':https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap, sans-serif"
+codeFont = "'Space Mono':https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap, monospace"
+# Tamaños/pesos base
+baseFontSize   = 16               
+baseFontWeight = 400

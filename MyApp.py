@@ -40,14 +40,15 @@ fundamentals_page = st.Page("Get started/Fundamentals.py", title="Fundamentals",
 architecture_page = st.Page("Develop/Architecture_and_Execution.py", title="Architecture", icon=":material/dashboard:")
 appdesign_page = st.Page("Develop/AppDesign.py", title="AppDesign", icon=":material/brush:")
 connectionSecretsAuth_page = st.Page("Develop/Connections_Secrets_Authentication.py", title="Connections, Secrets & Authentication", icon=":material/account_circle:")
-customComponents_page = st.Page("Develop/CustomComponents.py", title="Custom components", icon=":material/sdk:")
+customComponents_page = st.Page("Develop/CustomComponents.py", title="Custom Components", icon=":material/sdk:")
+configurationAndTheming_page = st.Page("Develop/ConfigurationAndTheming.py", title="Configuration & Theming", icon=":material/settings:")
 
 if st.session_state.user_email:
     pg = st.navigation(
         {
             "Account": [logout_page],
             "Get started": [fundamentals_page],
-            "Develop": [architecture_page, appdesign_page, connectionSecretsAuth_page, customComponents_page],
+            "Develop": [architecture_page, appdesign_page, connectionSecretsAuth_page, customComponents_page, configurationAndTheming_page],
         },
         position="sidebar",
         expanded=True

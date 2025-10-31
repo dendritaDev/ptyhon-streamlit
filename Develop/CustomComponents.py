@@ -8,7 +8,7 @@ st.title("Custom Components")
 st.header("Custom piece of HTML")
 
 components.html(
-    """
+    """ 
     <canvas id="c" width="300" height="300" style="background:#111; display:block; margin:auto; border-radius:8px;"></canvas>
     <script>
       const canvas = document.getElementById('c');
@@ -36,11 +36,6 @@ components.html(
     """,
     height=320,
 )
-
-
-
-
-
 
 st.header("iframe components")
 components.iframe(
