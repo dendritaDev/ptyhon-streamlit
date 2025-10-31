@@ -2,7 +2,7 @@ import streamlit as st
 
 def init_global(global_key: str, default):
     """Asegura que la clave global exista con un valor por defecto."""
-    st.session_state.setdefault(global_key, default)
+    st.session_state.setdefault(global_key, default) #setDefault solo escribe si no existe ya la clave
 
 def mirror_global_to_local(local_key: str, global_key: str):
     """

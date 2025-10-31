@@ -10,8 +10,15 @@ st.title("Architecture")
 st.write("Esta página tiene **sus propios controles locales**, sincronizados con el **mismo estado global**.")
 
 #---------------------------------
-#SINCRONIZACIÓN VARIABLES GLOBALES
+# SINCRONIZACIÓN VARIABLES GLOBALES → TEXTO EN PANTALLA
+st.subheader("Sincronización con estado global")
+st.markdown("""
+Esta página usa un patrón **global ↔ local** para que varios módulos compartan filtros:
 
+- `init_global(key, default)`: garantiza que la clave **global** exista (una sola vez por sesión).
+- `mirror_global_to_local(local_key, global_key)`: **antes de dibujar** los widgets, copia **global → local** para que la UI muestre el último valor consolidado.
+- `bind_local_to_global(local_key, global_key)`: callback `on_change` que sube cambios **local → global** cuando el usuario interactúa.
+""")
 # --- Garantiza claves globales (por acceso directo) ---
 init_global("global_group", "A")
 init_global("global_threshold", 50)
@@ -52,28 +59,31 @@ st.dataframe(
 
 
 #---------------------------------
+# CACHE: CUÁNDO USAR CADA UNA → TEXTO EN PANTALLA
+st.subheader("Caching: `st.cache_data` vs `st.cache_resource`")
+st.markdown("""
+**Casos típicos para `st.cache_data`** (devuelve **copias** memoizadas):
+- Cargar **CSVs** grandes.
+- Consultar una **API** externa con `requests`.
+- Ejecutar una inferencia **costosa** de ML (listas/dicts como resultado).
+- Transformaciones **pesadas** de pandas.
 
+**Casos típicos para `st.cache_resource`** (mantiene un **objeto vivo** / singleton):
+- Conexiones a **BD**, clientes de API persistentes.
+- **Modelos** de ML cargados en memoria.
+- Manejadores de **ficheros**/I/O u otros recursos no serializables.
 
-# Casos típicos para st.cache_data:
+**Diferencia clave**: `cache_data` evita recomputar **datos** devolviendo copias; `cache_resource` reutiliza **el mismo objeto** (patrón **singleton**).
+""")
 
-    # Cargar CSVs grandes.
+# SESSION STATE + CALLBACKS → TEXTO EN PANTALLA
+st.subheader("Session State: contador y callbacks")
+st.markdown("""
+- `st.session_state` guarda valores **persistentes por pestaña** (una sesión por tab).
+- Los **callbacks** (`on_click`, `on_change`) mutan estado **antes** del rerun.
+- `args` pasa argumentos **por posición**; `kwargs` por **nombre** (útil para claridad).
+""")
 
-    # Consultar una API externa con requests.
-
-    # Ejecutar una inferencia cara de ML y devolver resultados (listas, dicts).
-
-    # Hacer transformaciones pesadas de pandas
-
-
-# Casos típicos para st.cache_resources:
-
-    # Cosas no serializables o objetos que permanecen vivos: conexión a BD, modelos de ML cargados en memoria, fichero abierto I/O...
-
-# st.cache_data devuelve copias de algo en vez de recalcularlo, mientras que
-# st.cache_resources utiliza el mismo objeto, SINGLETON
-
-#st.session_state es un diccionario donde se puedne guardar valores que persisten en esa sesión (tab), cada tab es una sesión nueva. P.e una variable local que queremos que cada vez que se ejecuta algo sume un +1
-#también hay callbacks para la UI:
 if "count" not in st.session_state:
     st.session_state.count = 0
 
@@ -86,7 +96,16 @@ st.button("Restar 1", on_click=change_counter, kwargs={"delta": -1})
 
 st.write("Count =", st.session_state.count)
 
-#también se pueden guardar informacion de widgets en reruns con session_state:
+
+# WIDGETS CON MEMORIA (key) → TEXTO EN PANTALLA
+st.subheader("Guardar el valor de un widget entre reruns (key)")
+st.markdown("""
+Asigna `key` al widget cuando:
+- Deba **recordar su valor** entre reruns.
+- Quieras **modificarlo desde callbacks**.
+- Su valor se use en **múltiples sitios**.
+""")
+
 if "celsius" not in st.session_state:
     # set the initial default value of the slider widget
     st.session_state.celsius = 50.0
@@ -101,9 +120,12 @@ st.slider(
 # This will get the value of the slider widget
 st.write(st.session_state.celsius)
 
-#FORMS
-#Para evitar que cada vez que se cambia un widget se actualice todo, hay los forms quepermiten cambiar varios valores 
-#y hasta que no se le da a enviar no se vuelve a ejecutar el script.
+# FORMS → TEXTO EN PANTALLA
+st.subheader("Forms: agrupar cambios y enviar de una vez")
+st.markdown("""
+Los **forms** retrasan el rerun hasta pulsar **Submit**. Útiles para confirmar varios cambios a la vez.
+El bloque `with st.form(...):` es un **context manager** (gestiona apertura/cierre automáticamente).
+""")
 
 with st.form("suma"): #with manera de python de manejar automaticamente memoryleaks rollo cuando abres cierras un doc de I/O. Se usa para: forms, columnas y container
     a = st.number_input("a", step=1.0)
@@ -155,7 +177,12 @@ df['size'] = np.where(df.team=='A',sizeA, sizeB)
 
 st.map(df, size='size', color='color')
 
-#podemos guardar los valores con session_state y usar callback en el submit button del form (solo este tipo de button puede usar callbacks en un form):
+# CALLBACK EN SUBMIT DE FORM → TEXTO EN PANTALLA
+st.subheader("Callback en submit de form")
+st.markdown("""
+Los **form_submit_button** admiten `on_click`. Ejemplo: calcular y **persistir** una suma en `session_state`.
+""")
+
 if 'sum' not in st.session_state:
     st.session_state.sum = ''
 
@@ -173,7 +200,13 @@ with st.form('addition'):
     st.number_input('b', key = 'b')
     st.form_submit_button('add', on_click=sum)
 
-#widget behavior: dos widgets idénticos con los mismos argumentos (misma etiqueta, mismos límites, mismo key o sin key, etc.) en la misma página, Streamlit no sabe diferenciarlos y lanza DuplicateWidgetID. Solución: darles key distintos. 
+# WIDGET BEHAVIOR: CLAVES ÚNICAS → TEXTO EN PANTALLA
+st.subheader("Widget behavior: evita DuplicateWidgetID")
+st.markdown("""
+Dos widgets **idénticos** (misma etiqueta, mismos límites, **misma key** o sin key) en la misma página → **DuplicateWidgetID**.  
+**Solución**: asigna **keys distintas**.
+""")
+
 # ERROR:
 # st.button("OK")
 # st.button("OK")
@@ -182,18 +215,19 @@ with st.form('addition'):
 st.button("OK", key="privacy")
 st.button("OK", key="terms")
 
-# Order of operations:
-# When a user interacts with a widget, the order of logic is:
-    # Its value in st.session_state is updated.
-    # The callback function (if any) is executed.
-    # The page reruns with the widget function returning its new value.
-# If the callback function writes anything to the screen, that content will appear above the rest of the page. 
-# A callback function runs as a prefix to the script rerunning. Consequently, that means anything written 
-# via a callback function will disappear as soon as the user performs their next action. Other widgets 
-# should generally not be created within a callback function.
+# ORDEN DE EJECUCIÓN → TEXTO EN PANTALLA
+st.subheader("Orden de operaciones en widgets")
+st.markdown("""
+1. Se actualiza el valor en `st.session_state`.
+2. Se ejecuta el **callback** (si existe).
+3. La página **rerun** y la función del widget devuelve el nuevo valor.
 
-#Using a callback function with a form requires consideration of this order of operations.
+**Nota**: Lo que escribas **desde un callback** aparece **antes** del resto de la página y **desaparece** con la siguiente interacción.  
+Evita **crear widgets dentro de callbacks**.
+""")
+st.caption("En forms, recuerda este orden: el callback del submit ocurre antes del rerun.")
 
+# Ejemplo de asistencia (callback + session_state)
 if "attendance" not in st.session_state:
     st.session_state.attendance = set()
 
@@ -211,12 +245,15 @@ with st.form(key="my_form2"):
 
 
 
-#Reseteo de los Widgets:
-#Un widget recuerda su valor mientras:
-    # Siga existiendo en la página en cada rerun.
-    # Sus parámetros clave (etiqueta, rango, key, etc.) no cambien.
-    # Si cambias alguno de esos parámetros, Streamlit interpreta que es “otro” widget, 
-    # y lo resetea al valor por defecto. Ejemplo:
+# RESETEO DE WIDGETS → TEXTO EN PANTALLA
+st.subheader("Reseteo de widgets: cuándo pierden el valor")
+st.markdown("""
+Un widget conserva su valor mientras:
+- **Siga existiendo** en la página en cada rerun.
+- Sus parámetros clave (etiqueta, rango, `key`, etc.) **no cambien**.
+
+Si alguno cambia, Streamlit lo trata como **otro widget** y lo resetea.
+""")
 minimum = st.number_input("Mínimo", 1, 5)
 maximum = st.number_input("Máximo", 6, 10, 10)
 
@@ -227,23 +264,24 @@ st.slider("Con default, con key", minimum, maximum, value=5, key="b1")
 
 
 #Vida y limpieza de los widgets~: Importante para varias paginas
-#Si en un rerun NO llamas a un widget que antes sí existía, Streamlit lo elimina de memoria 
-# y también borra su valor asociado en st.session_state.
+# VIDA Y LIMPIEZA DE WIDGETS ENTRE RERUNS/PÁGINAS → TEXTO EN PANTALLA
+st.subheader("Vida y limpieza de widgets (entre páginas/condiciones)")
+st.markdown("""
+Si en un rerun **no** creas un widget que **antes sí existía**, Streamlit lo **borra de memoria** y también su valor en `st.session_state`.  
+Al volver a mostrarlo, será **nuevo** (valor por defecto).
 
-#Eso quiere decir que si escondes temporalmente un widget (por ejemplo cambias de página o 
-# entras en una if que ya no lo muestra), cuando vuelva a aparecer, será “nuevo” y habrá 
-# perdido su valor anterior.
-
-    #Para solucionar esto, arriba de todo de los scripts podemos inicializar de nuevo los valores, para que
-    #streamlit detecte como que los estamos "usando", aunque pueda ser que no y no lo elimine. P.e:
+**Sugerencia**: inicializa valores de `session_state` al comienzo de tus scripts o centraliza esta lógica en una función común.
+""")
 st.session_state.count = st.session_state.count
+st.caption("Ejemplo de 'tocar' una clave para que Streamlit la considere usada en este rerun.")
 
-    #Posiblemente lo ideal seria llamar a una función y en esa función meter todas las session_state que vayamos creando
-    #así lo tenemos todo centralizado
 
-#Slider dinámico sin perder valor:
-    #Si hacemos que min y max sean dinamicas, para que el valor no se resetee cuando queda fuera del slider
-    #tenemos que:
+# SLIDER DINÁMICO SIN PERDER VALOR → TEXTO EN PANTALLA
+st.subheader("Slider dinámico sin perder valor cuando cambian min/max")
+st.markdown("""
+Si `min` y `max` cambian dinámicamente, el valor del slider puede quedar fuera de rango y **resetearse**.  
+**Solución**: **ajusta (clamp)** el valor a `[min, max]` **antes** de dibujar el slider.
+""")
 # Valor por defecto
 if "z" not in st.session_state:
     st.session_state.z = 5
