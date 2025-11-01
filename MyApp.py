@@ -42,13 +42,21 @@ appdesign_page = st.Page("Develop/AppDesign.py", title="AppDesign", icon=":mater
 connectionSecretsAuth_page = st.Page("Develop/Connections_Secrets_Authentication.py", title="Connections, Secrets & Authentication", icon=":material/account_circle:")
 customComponents_page = st.Page("Develop/CustomComponents.py", title="Custom Components", icon=":material/sdk:")
 configurationAndTheming_page = st.Page("Develop/ConfigurationAndTheming.py", title="Configuration & Theming", icon=":material/settings:")
+apiRefence_page = st.Page("Develop/ApiReference.py", title="API Reference", icon=":material/dictionary:")
 
 if st.session_state.user_email:
     pg = st.navigation(
         {
             "Account": [logout_page],
             "Get started": [fundamentals_page],
-            "Develop": [architecture_page, appdesign_page, connectionSecretsAuth_page, customComponents_page, configurationAndTheming_page],
+            "Develop": [
+                        architecture_page, 
+                        appdesign_page, 
+                        connectionSecretsAuth_page, 
+                        customComponents_page, 
+                        configurationAndTheming_page, 
+                        apiRefence_page,
+                        ],
         },
         position="sidebar",
         expanded=True

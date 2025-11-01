@@ -1,26 +1,3 @@
-# [theme]
-# base = "dark"               
-# primaryColor = "#7bff4bff"
-# backgroundColor = "#0E1117"
-# secondaryBackgroundColor = "#1B2431"
-# textColor = "#FAFAFA"
-# font = "sans serif" 
-# linkColor="darkOrchid"
-# showWidgetBorder=false
-
-
-
-# [theme.sidebar]
-# base = "dark"               
-# primaryColor = "#7bff4bff"
-# backgroundColor = "#0E1117"
-# secondaryBackgroundColor = "#1B2431"
-# textColor = "#FAFAFA"
-# font = "sans serif" 
-# linkColor="darkOrchid"
-# showWidgetBorder=true
-
-
 # =========================
 # CONFIGURACIÓN DE SERVIDOR
 # =========================
@@ -68,10 +45,9 @@ violetColor = "#A78BFA"
 grayColor = "#94A3B8"
 
 # 6) Tipografías (opción A: Google Fonts de forma rápida)
-#    NOTA: puedes usar 'Nombre:https://...css'. Puedes añadir fallback tras coma. :contentReference[oaicite:10]{index=10}
-font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap, sans-serif"
-headingFont= "'Space Grotesk':https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap, sans-serif"
-codeFont = "'Space Mono':https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap, monospace"
+font = "'Exo 2':https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap, ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace"
 # Tamaños/pesos base
 baseFontSize   = 16               
 baseFontWeight = 400
+
