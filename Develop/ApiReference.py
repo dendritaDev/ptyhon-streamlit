@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 from annotated_text import annotated_text #pip install st-annotated-text
 import plotly.express as px #pip install plotly
-
+ 
 st.set_page_config(page_title="API Reference", page_icon=":material/dictionary:")
 st.header("API REFERENCE")
 
@@ -379,3 +379,10 @@ st.write("st.rerun / st.stop — *opt-in*:")
 if st.button("Demo st.rerun()", key="api_rerun_btn"):
     st.rerun()
 # No hacemos st.stop aquí para no detener toda la página
+
+
+#
+# CACHE!!!!!
+#
+
+#https://docs.streamlit.io/develop/api-reference/caching-and-state/st.query_params 

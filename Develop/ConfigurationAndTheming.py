@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import json
-import plotly.express as px #pip install plotly
+import plotly.express as px #pip install plotly 
 import pandas as pd
 
 st.set_page_config(page_title="Configuration & Theming", page_icon=":material/tune:")
